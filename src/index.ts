@@ -16,11 +16,10 @@ export const FLOAT64_MIN = 2**-1022;
 export function eps(x: number = 1): number {
   if (Number.isFinite(x)) {
     x = Math.abs(x);
-    if (x >= FLOAT64_MIN) {
-      const exp = exponent(x);
-      return Number.EPSILON * 2**exp;
+    if (x <= FLOAT64_MIN) {
+      return Number.MIN_VALUE;
     }
-    return Number.MIN_VALUE;
+    return 2**(exponent(x) - 52);
   }
   return NaN
 }
