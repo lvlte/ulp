@@ -1,12 +1,12 @@
 {
-  "name": "@lvlte/number-epsilon",
+  "name": "@lvlte/ulp",
   "version": "0.0.0",
-  "description": "Compute the unit in last place of a given number (IEEE754 64-bit)",
+  "description": "Compute the unit in last place of a given IEEE-754 64-bit number",
   "license": "MIT",
   "author": "Eric Lavault <lvlte.code@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lvlte/number-epsilon"
+    "url": "git+https://github.com/lvlte/ulp"
   },
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -38,6 +38,7 @@
   "keywords": [
     "number",
     "epsilon",
+    "function",
     "precision",
     "eps",
     "ulp",
@@ -48,7 +49,7 @@
     "tolerance",
     "compare",
     "equal",
-    "unit of least precision"
+    "ULP"
   ],
   "devDependencies": {
     "@lvlte/tsconfig": "^1.0.1",
