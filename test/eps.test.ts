@@ -41,6 +41,14 @@ describe('Unit in the last place', () => {
     expect(eps(0)).toBe(Number.MIN_VALUE);
   });
 
+  test('eps(Number.MAX_VALUE) === 2^971', () => {
+    expect(eps(Number.MAX_VALUE)).toBe(2**971);
+  });
+
+  test('eps(FLOAT64_MIN) === Number.MIN_VALUE', () => {
+    expect(eps(FLOAT64_MIN)).toBe(Number.MIN_VALUE);
+  });
+
   test('eps(<subnormal-number>) === Number.MIN_VALUE', () => {
     expect(eps(2**-1023)).toBe(Number.MIN_VALUE);
     expect(eps(2**-1047)).toBe(Number.MIN_VALUE);
