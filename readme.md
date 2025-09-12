@@ -1,4 +1,4 @@
-# number-epsilon
+# ulp (epsilon function)
 
 > Compute the [unit of least precision](https://en.wikipedia.org/wiki/Unit_in_the_last_place)
 of a given IEEE-754 64-bit number.
@@ -6,18 +6,18 @@ of a given IEEE-754 64-bit number.
 ## Install
 
 ```sh
-npm install @lvlte/number-epsilon
+npm install @lvlte/ulp
 ```
 
 ## Usage
 
 ```js
 // ESM
-import { eps } from '@lvlte/number-epsilon';
+import { eps } from '@lvlte/ulp';
 ```
 ```js
 // CJS
-const { eps } = require('@lvlte/number-epsilon');
+const { eps } = require('@lvlte/ulp');
 ```
 ```js
 console.log(eps());                             // 2.220446049250313e-16
