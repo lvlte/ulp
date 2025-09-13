@@ -1,6 +1,6 @@
 {
   "name": "@lvlte/ulp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Compute the unit in last place of a given IEEE-754 64-bit number",
   "license": "MIT",
   "author": "Eric Lavault <lvlte.code@gmail.com>",
