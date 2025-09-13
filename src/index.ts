@@ -19,21 +19,27 @@ export function eps(x: number = 1): number {
     if (x <= FLOAT64_MIN) {
       return Number.MIN_VALUE;
     }
-    return 2**(exponent(x) - 52);
+    return 2**(_exponent(x) - 52);
   }
-  return NaN
+  return NaN;
 }
 
 /**
- * Exponent of a normalized floating-point number x (`Math.log2()` not precise
- * enough for large numbers).
- *
- * NB. This function assumes `x` is a finite, strictly positive number.
+ * Exponent of a normalized floating-point number x.
  *
  * @param x The input number
- * @returns The largest integer `y` such that `2^y ≤ x`.
+ * @returns The largest integer `y` such that `2^y ≤ |x|`, or `NaN` if x is not
+ * a finite number / if x is ±0.
  */
 export function exponent(x: number): number {
+  if (Number.isFinite(x) && x !== 0) {
+    return _exponent(Math.abs(x));
+  }
+  return NaN;
+}
+
+function _exponent(x: number): number {
+  // `Math.log2()` is not precise enough for large numbers.
   const [ipart, fpart] = modf(x);
   if (ipart > 0) {
     return ipart.toString(2).split('.', 1)[0].length - 1;
