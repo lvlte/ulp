@@ -25,6 +25,11 @@ export function eps(x: number = 1): number {
 }
 
 /**
+ * @borrows eps as ulp
+ */
+export const ulp = eps;
+
+/**
  * Exponent of a normalized floating-point number x.
  *
  * @param x The input number
