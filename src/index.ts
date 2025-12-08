@@ -44,10 +44,7 @@ export function exponent(x: number): number {
 }
 
 function _exponent(x: number): number {
-  // `Math.log2()` is not precise enough for large numbers.
-  const [ipart, fpart] = modf(x);
-  if (ipart > 0) {
-    return ipart.toString(2).split('.', 1)[0].length - 1;
-  }
-  return -(fpart.toString(2).split('1', 1)[0].length - 1);
+  // `Math.log2()` is not precise enough.
+  const s = x.toString(2);
+  return x < 1 ? -(s.split('1', 1)[0].length - 1) : s.split('.', 1)[0].length - 1;
 }
