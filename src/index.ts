@@ -1,5 +1,3 @@
-import { modf } from '@lvlte/modf';
-
 /**
  * The smallest positive normal number representable by IEEE-754 float64.
  */
