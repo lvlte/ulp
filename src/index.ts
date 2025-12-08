@@ -6,7 +6,8 @@ export const FLOAT64_MIN = 2**-1022;
 /**
  * Return the unit in the last place or unit of least precision (ulp) of x, that
  * is, the distance between two consecutive representable floating-point numbers
- * at x.
+ * at x. If x is a power of 2, the distance on either side of x is different, in
+ * which case the larger distance is returned.
  *
  * @param x The input number (default: 1)
  * @returns The ulp of x, or `NaN` if `x` is not a finite number.
