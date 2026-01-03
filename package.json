@@ -1,7 +1,7 @@
 {
   "name": "@lvlte/ulp",
   "version": "1.1.1",
-  "description": "Compute the unit in last place of a given IEEE-754 64-bit number",
+  "description": "Compute the ULP of a given number / Get the closest representable number that comes before/after it on the float64 number line",
   "license": "MIT",
   "author": "Eric Lavault <lvlte.code@gmail.com>",
   "repository": {
@@ -38,17 +38,18 @@
   "keywords": [
     "number",
     "epsilon",
-    "function",
     "precision",
     "eps",
     "ulp",
+    "nextFloat",
+    "prevFloat",
+    "next",
+    "previous",
     "float",
     "float64",
     "IEEE-754",
     "rounding",
     "tolerance",
-    "compare",
-    "equal",
     "ULP"
   ],
   "devDependencies": {
