@@ -1,6 +1,6 @@
 {
   "name": "@lvlte/ulp",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Compute the ULP of a given number / Get the closest representable number that comes before/after it on the float64 number line",
   "license": "MIT",
   "author": "Eric Lavault <lvlte.code@gmail.com>",
