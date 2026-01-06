@@ -1,9 +1,9 @@
 # ulp (epsilon function)
 
-> Compute the [unit of least precision](https://en.wikipedia.org/wiki/Unit_in_the_last_place)
-of a given IEEE-754 64-bit number : `eps(x)` (alias `ulp(x)`).<br>
+> Compute the [ULP](https://en.wikipedia.org/wiki/Unit_in_the_last_place)
+of a given IEEE-754 64-bit number: `eps(x)` (alias: `ulp(x)`).<br>
 > Get the closest representable number that comes before/after it on the float64
-number line : `nextFloat(x)`, `prevFloat(x)`.
+number line: `nextFloat(x)`, `prevFloat(x)`.
 
 
 ## Install
@@ -14,6 +14,8 @@ npm install @lvlte/ulp
 
 ## Usage
 
+### Import
+
 ```js
 // ESM
 import { eps, nextFloat, prevFloat } from '@lvlte/ulp';
@@ -22,6 +24,8 @@ import { eps, nextFloat, prevFloat } from '@lvlte/ulp';
 // CJS
 const { eps, nextFloat, prevFloat } = require('@lvlte/ulp');
 ```
+
+### eps(x) / ulp(x) (alias)
 ```js
 console.log( eps() );                               // 2.220446049250313e-16
 console.log( eps() === eps(1) );                    // true
@@ -35,6 +39,8 @@ console.log( eps(0) === Number.MIN_VALUE );         // true
 
 console.log( eps(Infinity) );                       // NaN
 ```
+
+### nextFloat(x) / prevFloat(x)
 ```js
 console.log( nextFloat(0) );                        // 5e-324
 console.log( nextFloat(0) === Number.MIN_VALUE );   // true
