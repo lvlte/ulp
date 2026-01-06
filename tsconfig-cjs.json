@@ -5,6 +5,5 @@
       "moduleResolution": "Node",
       "verbatimModuleSyntax": false,
       "outDir": "${configDir}/dist/cjs",
-      "declaration": false
   }
 }
