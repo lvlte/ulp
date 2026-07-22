@@ -1,7 +1,45 @@
 /**
- * The smallest positive normal number representable by IEEE-754 float64.
+ * Effective number of bits in the significand of a Float64 number (52 + 1, the
+ * leftmost 1 does not need to be stored, which leaves 1 sign bit and 11 bits
+ * for the exponent).
  */
-export const FLOAT64_MIN = 2**-1022;
+export const FLOAT64_PRECISION = 53;
+
+/**
+ * Minimum exponent of a normal Float64 number.
+ *
+ * For subnormals, the value is `FLOAT64_EMIN - FLOAT64_PRECISION + 1 = -1074`.
+ */
+export const FLOAT64_EMIN = -1022;
+
+/**
+ * Maximum exponent of a normal Float64 number.
+ */
+export const FLOAT64_EMAX = 1023;
+
+/**
+ * Smallest positive normal Float64 number (`FLOAT64_MIN = 2^-1022`).
+ *
+ * See also {@link Number.MIN_VALUE|`Number.MIN_VALUE`}, the absolute smallest
+ * subnormal (`2**-1074 ≈ 5e-308`).
+ */
+export const FLOAT64_MIN = 2.2250738585072014e-308;
+const _FLOAT64_MIN_2 = 2*FLOAT64_MIN;
+
+/**
+ * Largest positive finite Float64 number `FLOAT64_MAX = 2^1023 * (2 - 2^-52)`
+ *
+ * @see {@link Number.MAX_VALUE|`Number.MAX_VALUE`}.
+ */
+export const FLOAT64_MAX = 1.7976931348623157e+308;
+
+/**
+ * Machine epsilon of a Float64 number, the gap between 1 and the next largest
+ * value representable by Float64 (`FLOAT64_EPS = 2^-52`).
+ *
+ * @see {@link Number.EPSILON|`Number.EPSILON`}.
+ */
+export const FLOAT64_EPS = 2.220446049250313e-16;
 
 /**
  * Return the unit in the last place or unit of least precision (ulp) of x, that
