@@ -84,21 +84,56 @@ export function eps(x: number = 1): number {
 export const ulp = eps;
 
 /**
- * Exponent of a normalized floating-point number x.
+ * Return the unit in the first place (ufp) of `x`, the value represented by the
+ * leftmost 1 bit in the significant of `x`, or in other words `2^exponent(x)`.
  *
  * @param x The input number
- * @returns The largest integer `y` such that `2^y ≤ |x|`. If `x` is not a
- * finite number or equals ±0, returns `NaN`.
+ * @returns The ufp of x , or `0` if `x` is zero, `NaN` if `x` is not finite.
+ */
+export function ufp(x: number): number {
+  if (Number.isFinite(x) && x !== 0) {
+    x = Math.abs(x);
+    return x <= ufp_xmax ? _ufp(x) : 2**_exponent_s(x);
+  }
+  return x === 0 ? 0 : NaN;
+}
+
+/**
+ * ufp of `x`. Assumes x is a finite strictly positive number less than or
+ * equal to `ufp_xmax`.
+ */
+function _ufp(x: number) {
+  const q = ϕ * x;
+  return q - _1m*q;
+}
+
+/**
+ * Exponent of a normalized floating-point number x, that is, the largest
+ * integer `y` such that `2^y ≤ |x|`.
+ *
+ * @param x The input number
+ * @returns The exponent of `x`, or `NaN` if `x` is not finite or equals ±0.
  */
 export function exponent(x: number): number {
   if (Number.isFinite(x) && x !== 0) {
-    return _exponent(Math.abs(x));
+    x = Math.abs(x);
+    return x <= ufp_xmax ? _exponent_u(x) : _exponent_s(x);
   }
   return NaN;
 }
 
-function _exponent(x: number): number {
-  // `Math.log2()` is not precise enough.
+/**
+ * Exponent of `x`. Assumes `x` is a finite strictly positive number less than
+ * or equal to `ufp_xmax`.
+ */
+function _exponent_u(x: number): number {
+  return (x | 0) === x ? 31 - Math.clz32(x) : Math.log2(_ufp(x));
+}
+
+/**
+ * Exponent of `x`. Assumes x is a finite strictly positive number.
+ */
+function _exponent_s(x: number): number {
   const s = x.toString(2);
   return x < 1 ? -(s.split('1', 1)[0].length - 1) : s.split('.', 1)[0].length - 1;
 }
