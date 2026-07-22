@@ -41,6 +41,22 @@ export const FLOAT64_MAX = 1.7976931348623157e+308;
  */
 export const FLOAT64_EPS = 2.220446049250313e-16;
 
+const ϕ = 2**52 + 1;
+const _1p = 1 + Number.EPSILON;
+const _1m = 1 - Number.EPSILON/2;
+
+/**
+ * Maximum absolute value of `x` that can be passed to `_ufp(x)`.
+ */
+const ufp_xmax = FLOAT64_MAX/ϕ;
+
+/**
+ * `2^(1023 - 52)`
+ *
+ * Fallback for `eps(x)` in case `_1m * (_1p * x)` overflows.
+ */
+const epsx_overflow = 2**971;
+
 /**
  * Return the unit in the last place or unit of least precision (ulp) of x, that
  * is, the distance between two consecutive representable floating-point numbers
@@ -53,10 +69,11 @@ export const FLOAT64_EPS = 2.220446049250313e-16;
 export function eps(x: number = 1): number {
   if (Number.isFinite(x)) {
     x = Math.abs(x);
-    if (x <= FLOAT64_MIN) {
+    if (x < _FLOAT64_MIN_2) {
       return Number.MIN_VALUE;
     }
-    return 2**(_exponent(x) - 52);
+    const q = _1p * x;
+    return q - _1m*q || epsx_overflow;
   }
   return NaN;
 }
