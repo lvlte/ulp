@@ -1,4 +1,6 @@
-import { eps, exponent, FLOAT64_MIN, prevFloat, nextFloat } from '../src/index';
+import {
+  FLOAT64_MIN, FLOAT64_MAX, FLOAT64_EMIN, FLOAT64_EMAX, FLOAT64_EPS,
+  eps, exponent, prevFloat, nextFloat, ufp } from '../src/index';
 
 describe('Exponent accuracy', () => {
   test('exponent(2^x - ε) === x - 1', () => {
@@ -15,16 +17,16 @@ describe('Exponent accuracy', () => {
     expect(exponent(2**-1000 - Number.EPSILON/2**1000)).toBe(-1001);
   });
 
-  test('exponent(Number.MAX_VALUE) === 1023', () => {
-    expect(exponent(Number.MAX_VALUE)).toBe(1023);
+  test('exponent(Number.MAX_VALUE) === FLOAT64_EMAX', () => {
+    expect(exponent(Number.MAX_VALUE)).toBe(FLOAT64_EMAX);
   });
 
   test('exponent(FLOAT64_MIN) === -1022', () => {
-    expect(exponent(FLOAT64_MIN)).toBe(-1022);
+    expect(exponent(FLOAT64_MIN)).toBe(FLOAT64_EMIN);
   });
 
-  test('exponent(Number.MIN_VALUE) === -1074', () => {
-    expect(exponent(Number.MIN_VALUE)).toBe(-1074);
+  test('exponent(Number.MIN_VALUE) === FLOAT64_EMIN - 52', () => {
+    expect(exponent(Number.MIN_VALUE)).toBe(FLOAT64_EMIN - 52);
   });
 });
 
@@ -128,6 +130,63 @@ describe('Next/Previous Float', () => {
     [NaN, 'abc', '1', null, {}, [], Symbol(), () => 0].forEach(x => {
       expect(nextFloat(x as unknown as number)).toBe(NaN);
       expect(prevFloat(x as unknown as number)).toBe(NaN);
+    });
+  });
+});
+
+describe('Unit in the first place', () => {
+  test('ufp(2^n) === 2^n for some integer n', () => {
+    [0, 1, 52, 53, 106, 1021, 1022, 1023].forEach(n => {
+      expect(ufp(2**n)).toBe(2**n);
+      expect(ufp(2**-n)).toBe(2**-n);
+    });
+  });
+
+  test('ufp(Number.MAX_VALUE) === 2**FLOAT64_EMAX', () => {
+    expect(ufp(Number.MAX_VALUE)).toBe(2**FLOAT64_EMAX);
+  });
+
+  test('ufp(FLOAT64_MIN) === Number.FLOAT64_MIN', () => {
+    expect(ufp(FLOAT64_MIN)).toBe(FLOAT64_MIN);
+  });
+
+  test('ufp(2^53 - 1) === 2^52', () => {
+    expect(ufp(Number.MAX_SAFE_INTEGER)).toBe(2**52);
+  });
+
+  test('ufp(0) === 0', () => {
+    expect(ufp(0)).toBe(0);
+    expect(ufp(-0)).toBe(0);
+  });
+
+  test('ufp(x) === 2^exponent(x) for finite x', () => {
+    Array.from({length: 100}, () => Math.random()).forEach(x => {
+      const y = 1/x;
+      expect(ufp(x)).toBe(2**exponent(x));
+      expect(ufp(y)).toBe(2**exponent(y));
+    });
+  });
+
+  test('ufp(<int32>)', () => {
+    Array.from({length: 100}, () => Math.random()).forEach(x => {
+      const n = 1/x | 0;
+      expect(ufp(n)).toBe(2**exponent(n));
+    });
+  });
+
+  test('ufp(<subnormal-number>)', () => {
+    expect(ufp(prevFloat(2**-1023))).toBe(2**-1024);
+    expect(ufp(nextFloat(2**-1023))).toBe(2**-1023);
+    expect(ufp(prevFloat(2**-1047))).toBe(2**-1048);
+    expect(ufp(nextFloat(2**-1047))).toBe(2**-1047);
+    expect(ufp(Number.MIN_VALUE*3)).toBe(Number.MIN_VALUE*2);
+  });
+
+  test('ufp(<non-finite>) === NaN', () => {
+    expect(ufp(Infinity)).toBe(NaN);
+    expect(ufp(NaN)).toBe(NaN);
+    ['abc', '1', null, {}, [], Symbol(), () => 0].forEach(x => {
+      expect(ufp(x as unknown as number)).toBe(NaN);
     });
   });
 });
