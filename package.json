@@ -13,6 +13,7 @@
   },
   "type": "module",
   "main": "./dist/cjs/index.js",
+  "sideEffects": false,
   "exports": {
     "./package.json": "./package.json",
     ".": {
