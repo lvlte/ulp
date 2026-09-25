@@ -53,10 +53,21 @@
     "ULP"
   ],
   "devDependencies": {
+    "@jest/globals": "^30.5.2",
     "@lvlte/tsconfig": "^1.2.1",
-    "@types/jest": "^29.5.12",
-    "jest": "^29.7.0",
-    "ts-jest": "29.2.5",
-    "typescript": "^5.9.3"
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.5.1",
+    "jest": "^30.5.1",
+    "ts-jest": "^29.4.12",
+    "typescript": "^6.0.3"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "unrs-resolver": true
+  },
+  "overrides": {
+    "test-exclude": {
+      "glob": "^13.0.6"
+    }
   }
 }
