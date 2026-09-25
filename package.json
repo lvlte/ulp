@@ -29,7 +29,9 @@
     "dist"
   ],
   "scripts": {
-    "test": "jest",
+    "tscheck": "tsc --noEmit && tsc -p ./test/tsconfig.json",
+    "pretest": "npm run tscheck",
+    "test": "jest --verbose",
     "prebuild": "rm -Rf dist && mkdir dist",
     "build": "tsc && tsc -p tsconfig-cjs.json",
     "postbuild": "(echo { && echo   \"type\": \"commonjs\" && echo }) > ./dist/cjs/package.json",

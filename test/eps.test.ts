@@ -1,6 +1,14 @@
+import { describe, expect, test } from '@jest/globals';
 import {
-  FLOAT64_MIN, FLOAT64_MAX, FLOAT64_EMIN, FLOAT64_EMAX, FLOAT64_EPS,
-  eps, exponent, prevFloat, nextFloat, ufp } from '../src/index';
+  eps,
+  exponent,
+  FLOAT64_EMAX,
+  FLOAT64_EMIN,
+  FLOAT64_MIN,
+  nextFloat,
+  prevFloat,
+  ufp
+} from '../src/index.js';
 
 describe('Exponent accuracy', () => {
   test('exponent(2^x - ε) === x - 1', () => {
