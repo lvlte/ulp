@@ -144,7 +144,7 @@ function _exponent_s(x: number): number {
  *
  * @param x The input number
  * @returns The smallest floating-point number `y` such that `y > x`. If `x` is
- * `±Infinity` or `NaN`, returns `x`.
+ * `+Infinity` or `NaN`, returns `x`.
  */
 export function nextFloat(x: number): number {
   switch(x) {
@@ -176,9 +176,25 @@ export function nextFloat(x: number): number {
  *
  * @param x The input number
  * @returns The largest floating-point number `y` such that `y < x`. If `x` is
- * `±Infinity` or `NaN`, returns `x`.
+ * `-Infinity` or `NaN`, returns `x`.
  */
 export function prevFloat(x: number): number {
   // Prevent type coercion
   return typeof x === 'number' ? -nextFloat(-x) : NaN;
+}
+
+/**
+ * Test whether a Float64 number is subnormal.
+ *
+ * An IEEE floating-point number is subnormal when its exponent bits are zero
+ * and its significand is not zero.
+ *
+ * In other words, if the absolute value of `x` is non-zero and less than
+ * `FLOAT64_MIN`, then `x` is subnormal.
+ *
+ * @param x The input number
+ * @returns `true` if x is a subnormal number, `false` otherwise.
+ */
+export function isSubnormal(x: number): boolean {
+  return typeof x === 'number' && Math.abs(x) < FLOAT64_MIN && x !== 0;
 }

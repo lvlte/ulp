@@ -5,6 +5,7 @@ import {
   FLOAT64_EMAX,
   FLOAT64_EMIN,
   FLOAT64_MIN,
+  isSubnormal,
   nextFloat,
   prevFloat,
   ufp
@@ -78,6 +79,23 @@ describe('Machine epsilon', () => {
   test('eps() === eps(1) === Number.EPSILON', () => {
     expect(eps()).toBe(eps(1));
     expect(eps(1)).toBe(Number.EPSILON);
+  });
+});
+
+describe('Subnormal numbers', () => {
+  test('isSubnormal(x)', () => {
+    expect(isSubnormal(1)).toBe(false);
+    expect(isSubnormal(0)).toBe(false);
+    expect(isSubnormal(FLOAT64_MIN)).toBe(false);
+    expect(isSubnormal(NaN)).toBe(false);
+    expect(isSubnormal(Infinity)).toBe(false);
+    expect(isSubnormal(FLOAT64_MIN)).toBe(false);
+    expect(isSubnormal(prevFloat(FLOAT64_MIN))).toBe(true);
+    expect(isSubnormal(Number.MIN_VALUE)).toBe(true);
+    ['5e-324', null, undefined, {}, []].forEach(x => {
+      // @ts-expect-error
+      expect(isSubnormal(x)).toBe(false);
+    });
   });
 });
 
